@@ -1,0 +1,4 @@
+CRAenv/
+.env
+__pycache__/
+*.pyc

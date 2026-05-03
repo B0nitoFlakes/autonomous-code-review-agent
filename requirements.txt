@@ -1,0 +1,18 @@
+# LLM
+openai
+
+# Agent orchestration
+langgraph
+langchain
+langchain-openai
+
+# API
+fastapi
+uvicorn
+
+# GitHub integration
+PyGithub
+
+# Utilities
+python-dotenv
+pydantic
