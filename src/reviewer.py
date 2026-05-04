@@ -1,19 +1,12 @@
 import asyncio
+from graph import build_graph
 from agents import bug_agent, security_agent, style_agent, performance_agent, synthesizer_agent
 
 async def review_code(code: str)->str:
-    print("Running specialized agents... \n")
-    
-    bugs, security, style, performance = await asyncio.gather(
-        bug_agent(code),
-        security_agent(code),
-        style_agent(code),
-        performance_agent(code),
-    )
-
-    print("Synthesizing results... \n")
-    final_report = await synthesizer_agent(bugs, security, style, performance)
-    return final_report
+    graph = build_graph()
+    state = {"code":code}
+    result = await graph.ainvoke(state)
+    return result["final_report"]
 
 # test it
 if __name__ == "__main__":
