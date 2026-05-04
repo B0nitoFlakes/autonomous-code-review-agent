@@ -1,23 +1,18 @@
 import asyncio
 from graph import build_graph
+from github_integration import get_code_from_github
 
-async def review_code(code: str)->str:
+async def review_code(code: str) -> str:
     graph = build_graph()
-    state = {"code":code}
-    result = await graph.ainvoke(state)
+    result = await graph.ainvoke({"code": code})
     return result["final_report"]
 
-# test it
+async def review_github(url: str) -> str:
+    print(f"Fetching code from {url}...\n")
+    code = get_code_from_github(url)
+    return await review_code(code)
+
 if __name__ == "__main__":
-    test_code = """
-def get_user(id):
-    query = "SELECT * FROM users WHERE id = " + id
-    password = "admin123"
-    result = []
-    for i in range(len(result)):
-        for j in range(len(result)):
-            print(result[i][j])
-    return result
-"""
-    result = asyncio.run(review_code(test_code))
+    url = "https://github.com/B0nitoFlakes/autonomous-code-review-agent/pull/2"
+    result = asyncio.run(review_github(url))
     print(result)
