@@ -12,13 +12,19 @@ class GithubRequest(BaseModel):
 
 @app.post("/review/code")
 async def review_code_endpoint(request: CodeRequest):
-    report = await review_code(request.code)
-    return {"report": report}
+    result = await review_code(request.code)
+    return {
+        "report": result["report"],
+        "fixed_code": result["fixed_code"]
+    }
 
 @app.post("/review/github")
 async def review_github_endpoint(request: GithubRequest):
-    report = await review_github(request.url)
-    return {"report": report}
+    result = await review_github(request.url)
+    return {
+        "report": result["report"],
+        "fixed_code": result["fixed_code"]
+    }
 
 @app.get("/")
 def health_check():

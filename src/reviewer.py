@@ -5,7 +5,10 @@ from github_integration import get_code_from_github
 async def review_code(code: str) -> str:
     graph = build_graph()
     result = await graph.ainvoke({"code": code})
-    return result["final_report"]
+    return {
+        "report": result["final_report"],
+        "fixed_code": result["fixed_code"]
+    }
 
 async def review_github(url: str) -> str:
     print(f"Fetching code from {url}...\n")

@@ -44,3 +44,12 @@ async def synthesizer_agent(bug_result: str, security_result: str, style_result:
     Security findings: {security_result}
     Style findings: {style_result}
     Performance findings: {performance_result}""")
+
+async def autofix_agent(code: str, review_report: str) -> str:
+    return await run_agent(f"""You are an expert code fixer.
+    You will receive the original code and a review report highlighting issues.
+    Rewrite the code with all the fixes applied.
+    Only fix what is mentioned in the review report.
+    Do not change anything else.
+    Return only the fixed code, no explanations.""",
+    f"""Original code:\n{code}\n\nReview report:\n{review_report}""")
