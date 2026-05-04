@@ -26,4 +26,5 @@ def get_code_from_pr(pr_url: str) -> str:
 if __name__ == "__main__":
     pr_url = "https://github.com/hello/comar/pull/1234"
     code = get_code_from_pr(pr_url)
+    print("try to learn to do PR")
     print(code)
