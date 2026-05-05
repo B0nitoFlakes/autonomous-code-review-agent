@@ -16,6 +16,6 @@ async def review_github(url: str) -> str:
     return await review_code(code)
 
 if __name__ == "__main__":
-    url = "https://github.com/B0nitoFlakes/autonomous-code-review-agent/pull/2"
-    result = asyncio.run(review_github(url))
+    url = """def calculate_discount(price, discount):\n    result = price / discount\n    return result\n\nuser = {\"name\": \"Ali\"}\nprint(user[\"age\"])\n\nitems = [1, 2, 3]\nprint(items[10])"""
+    result = asyncio.run(review_code(url))
     print(result)
