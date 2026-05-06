@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autonomous Code Review Agent</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Autonomous Code Review Agent</h1>
+            <p>Paste your code or a GitHub URL to get an instant AI-powered review</p>
+        </header>
+
+        <div class="input-section">
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab('code')">Paste Code</button>
+                <button class="tab" onclick="switchTab('github')">GitHub URL</button>
+            </div>
+
+            <div id="code-input" class="input-container">
+                <textarea id="code" placeholder="Paste your code here..."></textarea>
+            </div>
+
+            <div id="github-input" class="input-container hidden">
+                <input type="text" id="github-url" placeholder="https://github.com/username/repo or PR link"/>
+            </div>
+
+            <button class="review-btn" onclick="submitReview()">
+                Review Code
+            </button>
+        </div>
+
+        <div id="loading" class="loading hidden">
+            <div class="spinner"></div>
+            <p>Running agents in parallel...</p>
+        </div>
+
+        <div id="results" class="results hidden">
+            <div class="result-tabs">
+                <button class="result-tab active" onclick="switchResult('report')">Review Report</button>
+                <button class="result-tab" onclick="switchResult('fix')">Fixed Code</button>
+            </div>
+
+            <div id="report-output" class="output"></div>
+            <div id="fix-output" class="output hidden"></div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
