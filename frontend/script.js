@@ -1,4 +1,4 @@
-const API_URL = "autonomous-code-review-agent-production.up.railway.app"
+const API_URL = "https://autonomous-code-review-agent-production.up.railway.app"
 
 let activeTab = "code"
 
