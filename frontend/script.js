@@ -47,6 +47,12 @@ async function submitReview() {
 
         const data = await response.json()
 
+        if (!response.ok) {
+            loading.classList.add("hidden")
+            alert(data.detail || "Something went wrong")
+            return
+        }
+
         document.getElementById("report-output").textContent = data.report
         document.getElementById("fix-output").textContent = data.fixed_code
 
