@@ -8,6 +8,7 @@ langchain-openai
 
 # API
 fastapi
+slowapi
 uvicorn
 
 # GitHub integration
@@ -16,3 +17,6 @@ PyGithub
 # Utilities
 python-dotenv
 pydantic
+
+#testing
+deepeval
