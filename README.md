@@ -216,4 +216,4 @@ def get_user(user_id):
 
 ## 📄 License
 
-MIT License
+[MIT LICENSE](LICENSE)
