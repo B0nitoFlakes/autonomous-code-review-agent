@@ -4,6 +4,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'backend'))
 
 import asyncio
 from deepeval import evaluate
+from deepeval.evaluate import AsyncConfig, DisplayConfig
 from deepeval.metrics import GEval
 from deepeval.test_case import LLMTestCase, SingleTurnParams
 from reviewer import review_code
@@ -254,6 +255,7 @@ async def run_evals():
 
     accuracy_metric = GEval(
         name="Code Review Accuracy",
+        model="gpt-4o-mini",
         criteria="""
         Evaluate the quality of the AI code review agent based on
         the accuracy of critical issue detection and avoidance of false positives.
@@ -297,7 +299,18 @@ async def run_evals():
 
     evaluate(
         test_cases=test_cases,
-        metrics=[accuracy_metric]
+        metrics=[accuracy_metric],
+        hyperparameters={
+            "model": "gpt-4o",
+            "agents": "bug, security, style, performance, synthesizer, autofix",
+            "evaluation_model": "gpt-4o-mini"
+        },
+        async_config=AsyncConfig(
+            run_async=True,
+            throttle_value=10,
+            max_concurrent=3
+        ),
+        display_config=DisplayConfig(results_folder="./results")
     )
 
 if __name__ == "__main__":

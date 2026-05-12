@@ -2,3 +2,5 @@ CRAenv/
 .env
 __pycache__/
 *.pyc
+tests/.deepeval/
+tests/results/
