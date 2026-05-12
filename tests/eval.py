@@ -297,7 +297,8 @@ async def run_evals():
 
     evaluate(
         test_cases=test_cases,
-        metrics=[accuracy_metric]
+        metrics=[accuracy_metric],
+        run_async=False
     )
 
 if __name__ == "__main__":
