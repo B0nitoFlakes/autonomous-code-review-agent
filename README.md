@@ -53,6 +53,7 @@ graph TD
 | **Docker** | Containerized for easy local setup |
 | **Railway** | Backend deployment |
 | **Vercel** | Frontend deployment |
+| **DeepEval** | Agent output evaluation and accuracy testing |
 
 ## Features
 
@@ -62,6 +63,9 @@ graph TD
 - **REST API** — fully exposed via FastAPI, accessible from any client
 - **Rate limiting** — prevents API abuse and controls OpenAI token costs
 - **CORS enabled** — frontend and backend communicate across different domains
+- **Concurrent request limiting** — prevents multiple simultaneous requests per IP
+- **Agent evaluation** — DeepEval test suite with 84%+ pass rate across 13 test cases
+- **Smart GitHub traversal** — BFS traversal with file size limits, skip directories, and extension filtering
 
 ## Getting Started
 
@@ -69,6 +73,7 @@ graph TD
 - Docker installed — [docker.com](https://docker.com)
 - OpenAI API key — [platform.openai.com](https://platform.openai.com)
 - GitHub Personal Access Token — [github.com/settings/tokens](https://github.com/settings/tokens)
+- DeepEval (for running evaluation tests) — `pip install deepeval`
 
 ### Option 1 — Docker (Recommended)
 
@@ -187,6 +192,17 @@ def get_user(user_id):
     return cursor.fetchall()
 ```
 
+## Running Evaluation Tests
+
+Evaluation tests are run locally using DeepEval to measure the accuracy of the agent's code review output. Tests are not part of the deployment and are intended to be run during development when agent prompts or models are updated.
+
+```bash
+cd autonomous-code-review-agent
+python tests/eval.py
+```
+
+Runs 13 test cases across 5 categories — vulnerable code, clean code, edge cases, partially vulnerable, and misleading code. Uses DeepEval GEval metric to score agent accuracy.
+
 ## 🗺️ Roadmap
 
 - [x] Multi-agent system with parallel execution
@@ -197,6 +213,9 @@ def get_user(user_id):
 - [x] Rate limiting
 - [x] Docker setup
 - [x] Deployed on Railway + Vercel
+- [x] DeepEval evaluation test suite
+- [x] GitHub integration with BFS traversal and size limits
+- [x] Concurrent request limiting
 - [ ] Confidence scoring for auto-fix suggestions
 - [ ] VS Code extension
 - [ ] Support for local models via Ollama for privacy-sensitive codebases
@@ -206,9 +225,9 @@ def get_user(user_id):
 ## ⚠️ Known Limitations
 
 - LLM may occasionally produce inconsistent reviews across runs
-- Large repositories may hit context window limits
 - Rate limited to 5 requests per minute per IP
 - Code is sent to OpenAI API — not recommended for proprietary or sensitive codebases
+- GitHub integration limited to first 20 files for large repositories
 
 ## 👤 Author
 

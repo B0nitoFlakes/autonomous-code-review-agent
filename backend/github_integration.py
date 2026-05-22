@@ -1,5 +1,3 @@
-import code
-from signal import valid_signals
 from github import Github
 from dotenv import load_dotenv
 from collections import deque
