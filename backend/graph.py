@@ -1,17 +1,7 @@
-from typing import TypedDict
 from state import ReviewState
 from langgraph.graph import StateGraph, END
 import asyncio
 from agents import bug_agent, security_agent, style_agent, performance_agent, synthesizer_agent, autofix_agent
-
-# class ReviewState(TypedDict):
-#     code: str
-#     bug_result: str
-#     security_result: str
-#     style_result: str
-#     performance_result: str
-#     final_report: str
-#     fixed_code: str
 
 async def run_parallel_agents(state: ReviewState) -> ReviewState:
     print("Running specialized agents in parallel...\n")
@@ -22,7 +12,6 @@ async def run_parallel_agents(state: ReviewState) -> ReviewState:
         performance_agent(state["code"])
     )
     return {
-        **state,
         "bug_result": bugs,
         "security_result": security,
         "style_result": style,
@@ -38,14 +27,13 @@ async def run_synthesizer(state: ReviewState) -> ReviewState:
         state["performance_result"]
     )
     return {
-        **state,
         "final_report": report
     }
 
 async def run_autofix(state: ReviewState) -> ReviewState:
     print("Running autofix agent... \n")
     fixed = await autofix_agent(state["code"], state["final_report"])
-    return {**state, "fixed_code": fixed}
+    return {"fixed_code": fixed}
 
 def build_graph():
     graph = StateGraph(ReviewState)
