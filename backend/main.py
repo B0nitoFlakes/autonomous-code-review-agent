@@ -43,7 +43,11 @@ async def review_code_endpoint(request:Request, body: CodeRequest):
     try:
         result = await review_code(body.code)
         return {
-            "report": result["report"],
+            "bug_result": result["bug_result"],
+            "security_result": result["security_result"],
+            "style_result": result["style_result"],
+            "performance_result": result["performance_result"],
+            "suggested_fixes": result["suggested_fixes"],
             "fixed_code": result["fixed_code"]
         }
     finally:
@@ -60,7 +64,11 @@ async def review_github_endpoint(request:Request, body: GithubRequest):
     try:
         result = await review_github(body.url)
         return {
-            "report": result["report"],
+            "bug_result": result["bug_result"],
+            "security_result": result["security_result"],
+            "style_result": result["style_result"],
+            "performance_result": result["performance_result"],
+            "suggested_fixes": result["suggested_fixes"],
             "fixed_code": result["fixed_code"]
         }
     finally:

@@ -6,5 +6,5 @@ class ReviewState(TypedDict):
     security_result: str
     style_result: str
     performance_result: str
-    final_report: str
+    suggested_fixes: str
     fixed_code: str

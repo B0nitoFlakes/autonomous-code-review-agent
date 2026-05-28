@@ -6,7 +6,11 @@ async def review_code(code: str) -> str:
     graph = build_graph()
     result = await graph.ainvoke({"code": code})
     return {
-        "report": result["final_report"],
+        "bug_result": result["bug_result"],
+        "security_result": result["security_result"],
+        "style_result": result["style_result"],
+        "performance_result": result["performance_result"],
+        "suggested_fixes": result["suggested_fixes"],
         "fixed_code": result["fixed_code"]
     }
 

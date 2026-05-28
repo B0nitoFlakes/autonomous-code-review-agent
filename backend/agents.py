@@ -44,20 +44,24 @@ async def performance_agent(code: str) -> str:
     ONLY look for performance issues like unnecessary loops, inefficient algorithms, and memory problems.
     Be specific with line numbers. Do NOT use any emojis. Format your response under: PERFORMANCE""", code)
 
-async def synthesizer_agent(bug_result: str, security_result: str, style_result: str, performance_result: str) -> str:
-    return await run_agent("""You are a code review synthesizer.
-    You will receive findings from 4 specialist agents. Combine them into one clean structured report and add a SUGGESTED FIXES section at the end.
-    Format: BUGS FOUND, SECURITY ISSUES, CODE STYLE, PERFORMANCE, SUGGESTED FIXES. Do NOT use any emojis""",
+async def suggester_agent(bug_result: str, security_result: str, style_result: str, performance_result: str) -> str:
+    return await run_agent("""You are a code improvement suggester.
+    You will receive findings from 4 specialist agents.
+    Do NOT restate or summarize the findings.
+    ONLY provide actionable fix suggestions based on the findings.
+    Format your response under: SUGGESTED FIXES""",
     f"""Bug findings: {bug_result}
     Security findings: {security_result}
     Style findings: {style_result}
     Performance findings: {performance_result}""")
 
-async def autofix_agent(code: str, review_report: str) -> str:
+async def autofix_agent(code: str, bug_result:str, security_result:str, style_result:str, performance_result:str, suggested_fixes: str) -> str:
     return await run_agent(f"""You are an expert code fixer.
-    You will receive the original code and a review report highlighting issues.
+    You will receive the original code.
+    You will receive bug, security, style, and performance results highlighting the issues found.
+    You will also receive suggested fixes that provide suggestions on how to correct the code.
     Rewrite the code with all the fixes applied.
-    Only fix what is mentioned in the review report.
+    Only fix what is mentioned in the issues and suggestions.
     Do not change anything else.
-    Return only the fixed code, no explanations.""",
-    f"""Original code:\n{code}\n\nReview report:\n{review_report}""")
+    Return ONLY the fixed code, NO EXPLANATIONS.""",
+    f"""Original code:\n{code}\n\nBug Results\n{bug_result}\n\nSecurity Results\n{security_result}\n\nStyle Results\n{style_result}\nPerformance Result\n{performance_result}\n\nSuggested fixes:\n{suggested_fixes}""")
