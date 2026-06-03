@@ -18,7 +18,6 @@ async def review_github(url: str) -> str:
     print(f"Fetching code from {url}...\n")
     code = get_code_from_github(url)
     return code
-    # return await review_code(code)
 
 async def review_file(filename:str, code:str) ->str:
     graph = build_graph()

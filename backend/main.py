@@ -57,7 +57,7 @@ async def review_code_endpoint(request:Request, body: CodeRequest):
 @app.post("/review/github")
 @limiter.limit("5/minute")
 async def review_github_endpoint(request: Request, body: GithubRequest):
-    ip = active_requests.get(request)
+    ip = get_ip(request)
     keys_to_delete = [k for k in file_cache if k.startswith(ip + ":")]
     for key in keys_to_delete:
         file_cache.pop(key, None)

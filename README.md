@@ -7,7 +7,7 @@ An autonomous multi-agent system that reviews code for bugs, security vulnerabil
 
 ## How It Works
 
-Code is passed through 4 specialized AI agents, which are bug, security, style, and performance agents that run in parallel, each focused on a specific domain of concern. A synthesizer agent then combines all findings into a structured report, followed by an auto-fix agent that rewrites the code with all fixes applied.
+Code is passed through 4 specialized AI agents — bug, security, style, and performance — that run in parallel, each focused on a specific domain. A suggester agent then generates actionable fix suggestions based on all findings, followed by an auto-fix agent that rewrites the code with all fixes applied. Results are returned in dedicated sections for each concern.
 
 ```mermaid
 graph TD
@@ -20,14 +20,14 @@ graph TD
     C --> F[Style Checker Agent]
     C --> G[Performance Agent]
 
-    D --> H[Synthesizer Agent\nCombines all findings]
+    D --> H[Suggester Agent \nActionable fix suggestions]
     E --> H
     F --> H
     G --> H
 
     H --> I[Auto-Fix Agent\nRewrites code with fixes]
 
-    I --> J[Final Report + Fixed Code]
+    I --> J[Sectioned Report + Fixed Code]
 
     style A fill:#1a1a1a,color:#ffffff,stroke:#555
     style C fill:#1a1a1a,color:#ffffff,stroke:#555
@@ -66,6 +66,8 @@ graph TD
 - **Concurrent request limiting** — prevents multiple simultaneous requests per IP
 - **Agent evaluation** — DeepEval test suite with 84%+ pass rate across 13 test cases
 - **Smart GitHub traversal** — BFS traversal with file size limits, skip directories, and extension filtering
+- **Per-file lazy review** — GitHub repos and PRs show a file list first, agents only run when a specific file is selected, with results cached per file
+- **Sectioned review output** — results split into dedicated sections for bugs, security, style, performance, suggested fixes, and fixed code
 
 ## Getting Started
 
@@ -152,6 +154,17 @@ POST /review/github
 }
 ```
 
+### Review File (GitHub lazy loading)
+```
+POST /review/file
+```
+```json
+{
+    "filename": "src/agents.py",
+    "code": "your file code here"
+}
+```
+
 ### Health Check
 ```
 GET /
@@ -203,7 +216,7 @@ python tests/eval.py
 
 Runs 13 test cases across 5 categories — vulnerable code, clean code, edge cases, partially vulnerable, and misleading code. Uses DeepEval GEval metric to score agent accuracy.
 
-## 🗺️ Roadmap
+## Roadmap
 
 - [x] Multi-agent system with parallel execution
 - [x] LangGraph orchestration
@@ -216,23 +229,29 @@ Runs 13 test cases across 5 categories — vulnerable code, clean code, edge cas
 - [x] DeepEval evaluation test suite
 - [x] GitHub integration with BFS traversal and size limits
 - [x] Concurrent request limiting
-- [ ] Confidence scoring for auto-fix suggestions
-- [ ] VS Code extension
-- [ ] Support for local models via Ollama for privacy-sensitive codebases
-- [ ] Slack and GitHub PR comment integration
+- [x] Per-file lazy review with frontend caching
+- [x] Sectioned review output per concern
+- [x] Suggester agent replacing synthesizer for actionable fixes
+- [ ] Environment variable validation on startup
+- [ ] Retry logic on OpenAI API calls for rate limits and transient failures
+- [ ] Redis for distributed caching and active request tracking
+- [ ] Cache TTL — auto-expire cached file results
+- [ ] Async GitHub client to avoid blocking the event loop
+- [ ] External linter or test runner to objectively verify auto-fixed code
 - [ ] React + TypeScript frontend rebuild
+- [ ] Support for local models via Ollama for privacy-sensitive codebases
 
-## ⚠️ Known Limitations
+## Known Limitations
 
 - LLM may occasionally produce inconsistent reviews across runs
-- Rate limited to 5 requests per minute per IP
+- Rate limited to 2 requests per minute per IP for code review, 5 requests per minute for GitHub URL submission
 - Code is sent to OpenAI API — not recommended for proprietary or sensitive codebases
-- GitHub integration limited to first 20 files for large repositories
+- Sync GitHub client may cause minor event loop blocking on large repo traversals
 
-## 👤 Author
+## Author
 
 **Marco Setiawan** — [github.com/B0nitoFlakes](https://github.com/B0nitoFlakes)
 
-## 📄 License
+## License
 
 [MIT LICENSE](LICENSE)
