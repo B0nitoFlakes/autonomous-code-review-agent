@@ -9,7 +9,6 @@ g = Github(os.getenv("GITHUB_TOKEN"))
 
 MAX_FILES = 20
 MAX_FILE_SIZE = 50000
-MAX_TOTAL_SIZE = 100000
 MAX_DIRECTORY_DEPTH = 5
 
 ALLOWED_EXTENSIONS = (
@@ -61,7 +60,6 @@ def get_code_from_pr(pr_url: str) -> str:
     pr = repo.get_pull(pr_number)
 
     code_chunks = []
-    total_size = 0
 
     for file in pr.get_files():
 
@@ -90,19 +88,15 @@ def get_code_from_pr(pr_url: str) -> str:
 
         chunk = f"# File: {file.filename}\n{patch}"
 
-        if total_size + len(chunk) > MAX_TOTAL_SIZE:
-            code_chunks.append(
-                "# Note: Total size limit reached. Remaining files skipped"
-            )
-
-        code_chunks.append(chunk)
-
-        total_size += len(chunk)
+        code_chunks.append({
+            "filename": file.filename,
+            "code": chunk
+        })
     
     if not code_chunks:
         raise ValueError("No reviewable code found in this PR.")
 
-    return "\n\n".join(code_chunks)
+    return code_chunks
 
 def get_code_from_repo(repo_url: str) -> str:
     parts = repo_url.strip("/").split("/")
@@ -176,20 +170,15 @@ def get_code_from_repo(repo_url: str) -> str:
 
         chunk = f"# File: {item.path}\n{decoded}"
 
-        if total_size + len(chunk) > MAX_TOTAL_SIZE:
-            code_chunks.append(
-                "# Note: Total size limit reached. Remaining files skipped."
-            )
-            break
-
-        code_chunks.append(chunk)
-
-        total_size += len(chunk)
+        code_chunks.append({
+            "file_name": item.path,
+            "code": chunk
+        })
 
     if not code_chunks:
         raise ValueError("No reviewable code files found in this repo.")
 
-    return "\n\n".join(code_chunks)
+    return code_chunks
 
 
 def get_code_from_github(url: str) -> str:

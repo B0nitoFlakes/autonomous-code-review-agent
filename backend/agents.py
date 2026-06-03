@@ -19,6 +19,12 @@ async def run_agent(system_prompt: str, code: str)-> str:
 async def bug_agent(code:str)-> str:
     return await run_agent("""You are a bug detection specialist. 
     ONLY look for bugs, logic errors, null pointer issues, and incorrect implementations.
+    Do NOT flag AsyncOpenAI, AsyncClient, or any OpenAI SDK class names as bugs.
+    Do NOT flag gpt-4o, gpt-4, or any OpenAI model names as bugs.
+    Do NOT recommend replacing existing library implementations with older or alternative patterns.
+    If you are unsure whether a class or method exists in the latest version of a library, skip it entirely.
+    Do NOT flag third-party libraries, class names, or model names as bugs unless you are 100% certain that they are universally recognized as incorrect.
+    If you are unsure whether a library or class exists, do not flag it.
     Be specific with line numbers. Do NOT use any emojis. Format your response under: BUGS FOUND""", code)
 
 async def security_agent(code: str) -> str:
