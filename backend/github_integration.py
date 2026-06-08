@@ -111,8 +111,6 @@ def get_code_from_repo(repo_url: str) -> str:
 
     code_chunks = []
 
-    total_size = 0
-
     queue = deque()
 
     try:
