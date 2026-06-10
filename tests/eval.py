@@ -7,11 +7,17 @@ from deepeval import evaluate
 from deepeval.evaluate import AsyncConfig, DisplayConfig
 from deepeval.metrics import GEval
 from deepeval.test_case import LLMTestCase, SingleTurnParams
-from reviewer import review_code
+from backend.reviewer import review_code
 
 async def get_review(code: str)-> str:
     result = await review_code(code)
-    return result["report"]
+    return "\n\n".join([
+        result["bug_result"],
+        result["security_result"],
+        result["style_result"],
+        result["performance_result"],
+        result["suggested_fixes"]
+    ])
 
 # ---- 1. VULNERABLE CODE ----
 
