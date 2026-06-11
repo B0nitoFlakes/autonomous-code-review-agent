@@ -172,3 +172,128 @@ textarea:focus, input:focus {
     line-height: 1.6;
     color: #e0e0e0;
 }
+
+.file-list-section {
+    background: #1a1a1a;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    border: 1px solid #2a2a2a;
+}
+
+.file-list-section h3 {
+    color: #ffffff;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+}
+
+.file-item {
+    padding: 0.6rem 1rem;
+    border: 1px solid #2a2a2a;
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+    font-family: 'Courier New', monospace;
+    font-size: 0.85rem;
+    color: #e0e0e0;
+    background: #111;
+    transition: all 0.2s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.file-item:hover {
+    border-color: #555;
+    background: #1a1a1a;
+}
+
+.file-item.cached {
+    border-color: #2d5a27;
+    color: #6fcf6f;
+}
+
+.file-item.loading {
+    border-color: #555;
+    color: #888;
+    cursor: not-allowed;
+}
+
+.file-badge {
+    font-size: 0.75rem;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    background: #2d5a27;
+    color: #6fcf6f;
+}
+
+.result-section {
+    margin-bottom: 1.5rem;
+    border: 1px solid #2a2a2a;
+    border-radius: 8px;
+    padding: 1rem;
+}
+
+.result-section h3 {
+    color: #ffffff;
+    margin-bottom: 0.75rem;
+    font-size: 0.95rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #2a2a2a;
+}
+
+.current-file-label {
+    font-family: 'Courier New', monospace;
+    font-size: 0.85rem;
+    color: #888;
+    margin-bottom: 1rem;
+    padding: 0.5rem 1rem;
+    background: #111;
+    border-radius: 8px;
+    border: 1px solid #2a2a2a;
+}
+
+.output h1, .output h2, .output h3 {
+    color: #ffffff;
+    margin-bottom: 0.5rem;
+    margin-top: 1rem;
+}
+
+.output p {
+    margin-bottom: 0.5rem;
+    line-height: 1.6;
+}
+
+.output ul, .output ol {
+    padding-left: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.output li {
+    margin-bottom: 0.3rem;
+}
+
+.output code {
+    background: #2a2a2a;
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    color: #e0e0e0;
+}
+
+.output pre {
+    background: #111;
+    padding: 1rem;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin-bottom: 1rem;
+}
+
+.output pre code {
+    background: transparent;
+    padding: 0;
+}
+
+.output strong {
+    color: #ffffff;
+}
