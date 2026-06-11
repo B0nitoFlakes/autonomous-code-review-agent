@@ -27,7 +27,7 @@ async def bug_agent(code:str)-> str:
     If you are unsure whether a library or class exists, do not flag it.
     Be specific with line numbers. Do NOT use any emojis.
     Use markdown formatting for clarity — bold for emphasis and numbered lists for findings.
-    Do not add a header or title at the top of your response. The section title is already provided.""", code)
+    Do NOT add a header or title at the top of your response AT ALL. The section title is already provided.""", code)
 
 async def security_agent(code: str) -> str:
     return await run_agent("""You are a security specialist.
@@ -42,21 +42,21 @@ async def security_agent(code: str) -> str:
     Do not flag code as vulnerable based on speculation or missing context.
     Do NOT use any emojis.
     Use markdown formatting for clarity — bold for emphasis and numbered lists for findings.
-    Do not add a header or title at the top of your response. The section title is already provided.""", code)
+    Do NOT add a header or title at the top of your response AT ALL. The section title is already provided.""", code)
 
 async def style_agent(code: str) -> str:
     return await run_agent("""You are a code style specialist.
     ONLY look for style issues like naming conventions, missing docstrings, and readability problems.
     Be specific with line numbers. Do NOT use any emojis.
     Use markdown formatting for clarity — bold for emphasis and numbered lists for findings.
-    Do not add a header or title at the top of your response. The section title is already provided.""", code)
+    Do NOT add a header or title at the top of your response AT ALL. The section title is already provided.""", code)
 
 async def performance_agent(code: str) -> str:
     return await run_agent("""You are a performance specialist.
     ONLY look for performance issues like unnecessary loops, inefficient algorithms, and memory problems.
     Be specific with line numbers. Do NOT use any emojis. 
     Use markdown formatting for clarity — bold for emphasis and numbered lists for findings.
-    Do not add a header or title at the top of your response. The section title is already provided.""", code)
+    Do NOT add a header or title at the top of your response AT ALL. The section title is already provided.""", code)
 
 async def suggester_agent(bug_result: str, security_result: str, style_result: str, performance_result: str) -> str:
     return await run_agent("""You are a code improvement suggester.
@@ -65,7 +65,7 @@ async def suggester_agent(bug_result: str, security_result: str, style_result: s
     ONLY provide actionable fix suggestions based on the findings.
     Do NOT provide the code itself, only the suggestions.
     Use markdown formatting for clarity — bold for emphasis and numbered lists for findings.
-    Do not add a header or title at the top of your response. The section title is already provided.""",
+    Do NOT add a header or title at the top of your response AT ALL. The section title is already provided.""",
     f"""Bug findings: {bug_result}
     Security findings: {security_result}
     Style findings: {style_result}
@@ -80,6 +80,6 @@ async def autofix_agent(code: str, bug_result:str, security_result:str, style_re
     Only fix what is mentioned in the issues and suggestions.
     Do not change anything else.
     Use markdown formatting for clarity — bold for emphasis and numbered lists for findings.
-    Do not add a header or title at the top of your response. The section title is already provided.
+    Do NOT add a header or title at the top of your response AT ALL. The section title is already provided.
     Return ONLY the fixed code, NO EXPLANATIONS.""",
     f"""Original code:\n{code}\n\nBug Results\n{bug_result}\n\nSecurity Results\n{security_result}\n\nStyle Results\n{style_result}\nPerformance Result\n{performance_result}\n\nSuggested fixes:\n{suggested_fixes}""")
