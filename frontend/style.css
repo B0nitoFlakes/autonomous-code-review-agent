@@ -287,6 +287,8 @@ textarea:focus, input:focus {
     border-radius: 8px;
     overflow-x: auto;
     margin-bottom: 1rem;
+    white-space: pre-wrap;
+    word-wrap: break-word;
 }
 
 .output pre code {
