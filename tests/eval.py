@@ -1,7 +1,3 @@
-import sys
-import os
-sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'backend'))
-
 import asyncio
 from deepeval import evaluate
 from deepeval.evaluate import AsyncConfig, DisplayConfig
@@ -12,11 +8,11 @@ from backend.reviewer import review_code
 async def get_review(code: str)-> str:
     result = await review_code(code)
     return "\n\n".join([
-        result["bug_result"],
-        result["security_result"],
-        result["style_result"],
-        result["performance_result"],
-        result["suggested_fixes"]
+        f"Bug result: {result['bug_result']}",
+        f"Security result: {result['security_result']}",
+        f"Style result: {result['style_result']}",
+        f"Performance result: {result['performance_result']}",
+        f"Suggested fixes: {result['suggested_fixes']}"
     ])
 
 # ---- 1. VULNERABLE CODE ----
@@ -308,7 +304,7 @@ async def run_evals():
         metrics=[accuracy_metric],
         hyperparameters={
             "model": "gpt-4o",
-            "agents": "bug, security, style, performance, synthesizer, autofix",
+            "agents": "bug, security, style, performance, suggester, autofix",
             "evaluation_model": "gpt-4o-mini"
         },
         async_config=AsyncConfig(
